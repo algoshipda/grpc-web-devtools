@@ -1,4 +1,5 @@
 // Copyright (c) 2019 SafetyCulture Pty Ltd. All Rights Reserved.
+/* global chrome */
 
 import { createSlice } from "redux-starter-kit";
 import Fuse from 'fuse.js';
@@ -61,6 +62,7 @@ const networkSlice = createSlice({
     },
     setPreserveLog(state, action) {
       const { payload } = action;
+      chrome.storage.local.set({__GRPC_DEVTOOLS_PRESERVE_LOG_DEFAULT_VALUE__: payload});
       state.preserveLog = payload;
     },
   },
