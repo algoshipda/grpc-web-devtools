@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { configureStore } from 'redux-starter-kit';
 import App from './App';
 import './index.css';
-import networkReducer, { networkLog, clearLog } from './state/network';
+import networkReducer, { networkLog, clearLog, setPreserveLog } from './state/network';
 import toolbarReducer from './state/toolbar';
 import clipboardReducer from './state/clipboard';
 
@@ -44,6 +44,10 @@ function _onTabUpdated(tId, { status }) {
     store.dispatch(clearLog());
   }
 }
+
+chrome.storage.local.get('__GRPC_DEVTOOLS_PRESERVE_LOG_DEFAULT_VALUE__', (result) => {
+  store.dispatch(setPreserveLog(Boolean(result.__GRPC_DEVTOOLS_PRESERVE_LOG_DEFAULT_VALUE__)));
+});
 
 ReactDOM.render(
   <Provider store={store}>
